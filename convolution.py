@@ -30,8 +30,7 @@ def apply_convolution_chunk(args):
 
             result[i - start_row, j] = convolved_value
 
-    result = np.clip(result, 0, 255)
-    return result.astype(np.uint8)
+    return result
 
 
 def parallel_apply_convolution(img, kernel, num_workers, height, width, pad_y, pad_x):
@@ -44,4 +43,5 @@ def parallel_apply_convolution(img, kernel, num_workers, height, width, pad_y, p
         result_chunks = pool.map(apply_convolution_chunk, chunks)
 
     result = np.vstack(result_chunks)
+    result = np.clip(result, 0, 255).astype(np.uint8)
     return result
