@@ -2,7 +2,7 @@ from PIL import Image
 import numpy as np
 import time
 from convolution import apply_convolution
-from kernel import KerGB, KerB, KerUM, KerE, KerGB7
+from kernel import KerGB, KerB, KerGB7, KerSH, KerSV, KerPH, KerPV
 
 
 if __name__ == "__main__":

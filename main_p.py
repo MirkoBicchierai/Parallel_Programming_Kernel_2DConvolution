@@ -2,7 +2,7 @@ from PIL import Image
 import numpy as np
 import time
 from multiprocessing import cpu_count
-from kernel import KerGB, KerB, KerUM, KerGB7, KerSH, KerSV, KerPH, KerPV
+from kernel import KerGB, KerB, KerGB7, KerSH, KerSV, KerPH, KerPV
 from convolution import parallel_apply_convolution
 
 if __name__ == "__main__":
