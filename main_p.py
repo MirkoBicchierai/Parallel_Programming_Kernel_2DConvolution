@@ -2,14 +2,14 @@ from PIL import Image
 import numpy as np
 import time
 from multiprocessing import cpu_count
-from kernel import KerGB, KerB, KerUM, KerE, KerGB7
+from kernel import KerGB, KerB, KerUM, KerGB7, KerSH, KerSV, KerPH, KerPV
 from convolution import parallel_apply_convolution
 
 if __name__ == "__main__":
     old_img = np.asarray(Image.open('Img/input/test2.png'))
     num_workers = cpu_count() * 2
 
-    kernel = KerGB7
+    kernel = KerSH
     height, width = old_img.shape[0], old_img.shape[1]
     kernel_height, kernel_width = kernel.shape[0], kernel.shape[1]
     pad_y = kernel_height // 2
@@ -22,4 +22,4 @@ if __name__ == "__main__":
 
     sImg = Image.fromarray(new_img)
     sImg.show()
-    sImg.save('Img/output_image.png')
+    sImg.save('Img/output/output_image.png')

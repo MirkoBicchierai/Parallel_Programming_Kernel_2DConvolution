@@ -6,7 +6,7 @@ from kernel import KerGB, KerB, KerUM, KerE, KerGB7
 
 
 if __name__ == "__main__":
-    old_img = np.asarray(Image.open('Img/input/test2.png'))
+    old_img = np.asarray(Image.open('Img/input/1_2560x1440.png'))
 
     kernel = KerGB
     kernel_height, kernel_width = kernel.shape[0], kernel.shape[1]
@@ -21,4 +21,4 @@ if __name__ == "__main__":
 
     sImg = Image.fromarray(new_img)
     sImg.show()
-    sImg.save('Img/output_image.png')
+    sImg.save('Img/output/output_image.png')
