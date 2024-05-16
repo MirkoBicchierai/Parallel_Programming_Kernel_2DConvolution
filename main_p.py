@@ -6,7 +6,7 @@ from kernel import KerGB, KerB, KerUM, KerE, KerGB7
 from convolution import parallel_apply_convolution
 
 if __name__ == "__main__":
-    old_img = np.asarray(Image.open('Img/test2.png'))
+    old_img = np.asarray(Image.open('Img/input/test2.png'))
     num_workers = cpu_count() * 2
 
     kernel = KerGB7
