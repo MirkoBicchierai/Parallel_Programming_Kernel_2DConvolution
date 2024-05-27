@@ -1,1 +1,1 @@
-# Parallel_Programming_Kernel_2DConvolution
+# Parallel Programming Kernel 2DConvolution
