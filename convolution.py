@@ -74,7 +74,7 @@ def parallel_apply_convolution_shared(img, kernel, num_workers, height, width, p
                height, width, pad_y, pad_x) for i in range(num_workers)]
 
     with Pool(processes=num_workers) as pool:
-        result_chunks = pool.map(apply_convolution_chunk, chunks)
+        result_chunks = pool.map(apply_convolution_chunk_shared, chunks)
 
     result = np.vstack(result_chunks)
     result = np.clip(result, 0, 255).astype(np.uint8)
