@@ -2,7 +2,7 @@ from matplotlib import pyplot as plt
 
 
 def speed_up(seq, par, par_s, x, labels, ty, kernel_name):
-    colors = ["#e41a1c", "#377eb8", "#4daf4a", "#984ea3"]
+    colors = ["#ff6347", "#4682b4", "#32cd32", "#ff8c00", "#9370db"]
 
     x.insert(0, 1)
     for j in range(len(seq)):
@@ -34,7 +34,7 @@ def speed_up(seq, par, par_s, x, labels, ty, kernel_name):
             par_avg = t / len(par_s[j])
             su.append(seq_avg / par_avg)
 
-        plt.plot(x, su, label=labels[j], color=colors[j])
+        plt.plot(x, su, label=labels[j], color=colors[j], alpha=0.65)
 
     plt.title('Speed Up (Shared Memory)- ' + kernel_name)
     plt.xlabel('Threads')
