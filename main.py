@@ -116,8 +116,8 @@ def run_single_test(n, path, kernel, parallel, shared, num_workers):
 
 
 if __name__ == "__main__":
-    kernel = KerGB
-    kernel_name = "Gaussian Blur 5x5 Kernel"
+    kernel = KerPH
+    kernel_name = "Prewitt Horizontal Kernel"
     n = 100
     num_workers = [2, 4, 8, 16]  # 2, 4, 8, 16
 

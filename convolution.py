@@ -21,14 +21,11 @@ def apply_convolution_chunk(args):
     img, kernel, start_row, end_row, height, width, pad_y, pad_x = args
     result = np.zeros((end_row - start_row, width, 3))
 
-    for i in range(start_row, end_row):
-        for j in range(width):
-            convolved_value = np.zeros(3)
-            for dy in range(-pad_y, pad_y + 1):
-                for dx in range(-pad_x, pad_x + 1):
-                    convolved_value += img[i + pad_y + dy, j + pad_x + dx] * kernel[pad_y + dy, pad_x + dx]
-
-            result[i - start_row, j] = convolved_value
+    for channel in range(3):
+        for i in range(start_row, end_row):
+            for j in range(width):
+                region = img[i:i + 2 * pad_y + 1, j:j + 2 * pad_x + 1, channel]
+                result[i - start_row, j, channel] = np.sum(region * kernel)
 
     return result
 
