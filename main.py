@@ -39,7 +39,7 @@ def run_all_test(n, kernel, num_workers, resolutions, kernel_name):
                 print("Parallel version T:" + str(t) + " --- Time: " + str((sum_time / n)) + " sec")
 
             sImg = Image.fromarray(new_img)
-            sImg.save('Img/output/output_image_' + 'PAR_' + file[:-4] + '.png')
+            sImg.save('Img/output/output_image_' + 'PAR_' + file[:-4] + "_" + kernel_name + '.png')
 
             for t in num_workers:
                 sum_time = 0
@@ -51,7 +51,7 @@ def run_all_test(n, kernel, num_workers, resolutions, kernel_name):
                 print("Parallel version (shared memory) T:" + str(t) + " --- Time: " + str((sum_time / n)) + " sec")
 
             sImg = Image.fromarray(new_img)
-            sImg.save('Img/output/output_image_' + 'PAR_Shared_' + file[:-4] + '.png')
+            sImg.save('Img/output/output_image_' + 'PAR_Shared_' + file[:-4] + "_" + kernel_name + '.png')
 
             sum_time = 0
             for _ in range(n):
@@ -62,7 +62,7 @@ def run_all_test(n, kernel, num_workers, resolutions, kernel_name):
             print("Sequential version Time: " + str((sum_time / n)) + " sec")
 
             sImg = Image.fromarray(new_img)
-            sImg.save('Img/output/output_image_' + 'SEQ_' + file[:-4] + '.png')
+            sImg.save('Img/output/output_image_' + 'SEQ_' + file[:-4] + "_" + kernel_name + '.png')
 
             tmp_par.append(tmp_p)
             tmp_par_shared.append(tmp_p_s)
@@ -116,8 +116,8 @@ def run_single_test(n, path, kernel, parallel, shared, num_workers):
 
 
 if __name__ == "__main__":
-    kernel = KerPH
-    kernel_name = "Prewitt Horizontal Kernel"
+    kernel = KerGB
+    kernel_name = "Gaussian Blur 5x5 Kernel"
     n = 100
     num_workers = [2, 4, 8, 16]  # 2, 4, 8, 16
 
