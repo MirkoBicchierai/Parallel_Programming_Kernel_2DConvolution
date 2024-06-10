@@ -116,9 +116,9 @@ def run_single_test(n, path, kernel, parallel, shared, num_workers):
 
 
 if __name__ == "__main__":
-    kernel = KerPH
-    kernel_name = "Prewitt Horizontal Kernel"
-    n = 100
+    kernel = KerGB
+    kernel_name = "Gaussian Blur Kernel (5x5)"
+    n = 5
     num_workers = [2, 4, 8, 16]  # 2, 4, 8, 16
 
     # parallel = True
@@ -126,5 +126,5 @@ if __name__ == "__main__":
     # path = "HD/1_1280x720.png"
     # run_single_test(n, path, kernel, parallel, shared_memory, num_workers)
 
-    resolutions = ["HD", "FULL-HD", "2K", "4K"]  # "HD", "FULL-HD" , "2K", "4K"
+    resolutions = ["4K", "2K", "FULL-HD", "HD"]  # "4K", "2K", "FULL-HD", "HD"
     run_all_test(n, kernel, num_workers, resolutions, kernel_name)
