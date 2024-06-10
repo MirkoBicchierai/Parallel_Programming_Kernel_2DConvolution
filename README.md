@@ -25,9 +25,9 @@ We conducted several tests in this project on various kernels of different sizes
         </tr>
     </thead>
      <tr>
-        <td><img src="Img/output/output_image_PAR_1_1280x720_Prewitt Horizontal Kernel (3x3).png"></td>
-        <td><img src="Img/output/output_image_PAR_1_1280x720_Gaussian Blur Kernel (5x5).png"></td>
-        <td><img src="Img/output/output_image_PAR_1_1280x720_Gaussian Blur Kernel (7x7).png"></td>
+        <td><img src="Img/output/output_image_PAR_5_3840x2160_Prewitt Horizontal Kernel (3x3).png"></td>
+        <td><img src="Img/output/output_image_PAR_5_3840x2160_Gaussian Blur Kernel (5x5).png"></td>
+        <td><img src="Img/output/output_image_PAR_5_3840x2160_Gaussian Blur Kernel (7x7).png"></td>
      </tr>
 </table>
 
