@@ -1,4 +1,4 @@
-# Parallel Programming Kernel 2D Convolution (3 channel)
+# Parallel Programming Kernel 2D Convolution (RGB - 3 channel)
 
 This project aims to implement a kernel convolution algorithm in Python, offering both a sequential version and a parallel version that runs on a processor.
 
