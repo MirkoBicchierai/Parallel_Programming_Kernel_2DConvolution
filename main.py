@@ -74,7 +74,8 @@ def run_all_test(n, kernel, num_workers, resolutions, kernel_name):
     speed_up(times_seq, times_par, times_par_shared, num_workers, resolutions, "Normal", kernel_name)
 
 
-def run_single_test(n, path, kernel, parallel, shared, num_workers):
+def run_single_test(n, path, kernel, parallel, shared, num_workers, kernel_name):
+    name_f = path[:-4]
     old_img = np.asarray(Image.open("Img/input/" + path))
 
     height, width = old_img.shape[0], old_img.shape[1]
@@ -112,19 +113,19 @@ def run_single_test(n, path, kernel, parallel, shared, num_workers):
 
     sImg = Image.fromarray(new_img)
     sImg.show()
-    sImg.save('Img/output/single_output_image_' + label + '.png')
+    sImg.save('Img/output/single_output_image_' + label + '_' + name_f + '_' + kernel_name + '.png')
 
 
 if __name__ == "__main__":
-    kernel = KerGB
-    kernel_name = "Gaussian Blur Kernel (5x5)"
+    kernel = KerPH
+    kernel_name = "Prewitt Horizontal Kernel"
     n = 5
     num_workers = [2, 4, 8, 16]  # 2, 4, 8, 16
 
     # parallel = True
-    # shared_memory = True
-    # path = "HD/1_1280x720.png"
-    # run_single_test(n, path, kernel, parallel, shared_memory, num_workers)
+    # shared_memory = False
+    # path = "wiki.png"
+    # run_single_test(n, path, kernel, parallel, shared_memory, num_workers, kernel_name)
 
     resolutions = ["4K", "2K", "FULL-HD", "HD"]  # "4K", "2K", "FULL-HD", "HD"
     run_all_test(n, kernel, num_workers, resolutions, kernel_name)
