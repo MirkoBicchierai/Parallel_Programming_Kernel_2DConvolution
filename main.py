@@ -3,7 +3,7 @@ import numpy as np
 import time
 
 from common_function import speed_up
-from convolution import apply_convolution, parallel_apply_convolution, parallel_apply_convolution_shared
+from convolution import apply_convolution, parallel_apply_convolution, parallel_apply_convolution_normal
 from kernel import KerGB, KerB, KerGB7, KerSH, KerSV, KerPH, KerPV
 import os
 
@@ -11,17 +11,17 @@ import os
 def run_all_test(n, kernel, num_workers, resolutions, kernel_name):
     times_seq = []
     times_par = []
-    times_par_shared = []
+    times_par_NV = []
     for res in resolutions:
         tmp_seq = []
         tmp_par = []
-        tmp_par_shared = []
+        tmp_par_NV = []
         print("------------- Testing resolution: " + res + "-------------")
         images = os.listdir("Img/input/" + res)
         for file in images:
             print("-------------- Image " + file + "--------------")
             tmp_p = []
-            tmp_p_s = []
+            tmp_p_NV = []
             old_img = np.asarray(Image.open("Img/input/" + res + "/" + file))
             height, width = old_img.shape[0], old_img.shape[1]
             kernel_height, kernel_width = kernel.shape[0], kernel.shape[1]
@@ -45,13 +45,13 @@ def run_all_test(n, kernel, num_workers, resolutions, kernel_name):
                 sum_time = 0
                 for _ in range(n):
                     start_time = time.time()
-                    new_img = parallel_apply_convolution_shared(img_pre, kernel, t, height, width, pad_y, pad_x)
+                    new_img = parallel_apply_convolution_normal(img_pre, kernel, t, height, width, pad_y, pad_x)
                     sum_time += time.time() - start_time
-                tmp_p_s.append(sum_time / n)
-                print("Parallel version (shared memory) T:" + str(t) + " --- Time: " + str((sum_time / n)) + " sec")
+                tmp_p_NV.append(sum_time / n)
+                print("Parallel version (No vector) T:" + str(t) + " --- Time: " + str((sum_time / n)) + " sec")
 
             sImg = Image.fromarray(new_img)
-            sImg.save('Img/output/output_image_' + 'PAR_Shared_' + file[:-4] + "_" + kernel_name + '.png')
+            sImg.save('Img/output/output_image_' + 'PAR_NoVector_' + file[:-4] + "_" + kernel_name + '.png')
 
             sum_time = 0
             for _ in range(n):
@@ -65,16 +65,16 @@ def run_all_test(n, kernel, num_workers, resolutions, kernel_name):
             sImg.save('Img/output/output_image_' + 'SEQ_' + file[:-4] + "_" + kernel_name + '.png')
 
             tmp_par.append(tmp_p)
-            tmp_par_shared.append(tmp_p_s)
+            tmp_par_NV.append(tmp_p_NV)
 
         times_seq.append(tmp_seq)
         times_par.append(tmp_par)
-        times_par_shared.append(tmp_par_shared)
+        times_par_NV.append(tmp_par_NV)
 
-    speed_up(times_seq, times_par, times_par_shared, num_workers, resolutions, "Normal", kernel_name)
+    speed_up(times_seq, times_par, times_par_NV, num_workers, resolutions, kernel_name)
 
 
-def run_single_test(n, path, kernel, parallel, shared, num_workers, kernel_name):
+def run_single_test(n, path, kernel, parallel, num_workers, kernel_name):
     name_f = path[:-4]
     old_img = np.asarray(Image.open("Img/input/" + path))
 
@@ -85,23 +85,14 @@ def run_single_test(n, path, kernel, parallel, shared, num_workers, kernel_name)
     img_pre = np.pad(old_img, ((pad_y, pad_y), (pad_x, pad_x), (0, 0)), mode='constant', constant_values=0)
 
     if parallel:
-        if shared:
-            label = "PAR-Shared"
-        else:
-            label = "PAR"
+        label = "PAR"
         for t in num_workers:
             sum_time = 0
             for _ in range(n):
                 start_time = time.time()
-                if shared:
-                    new_img = parallel_apply_convolution_shared(img_pre, kernel, t, height, width, pad_y, pad_x)
-                else:
-                    new_img = parallel_apply_convolution(img_pre, kernel, t, height, width, pad_y, pad_x)
+                new_img = parallel_apply_convolution(img_pre, kernel, t, height, width, pad_y, pad_x)
                 sum_time += time.time() - start_time
-            if shared:
-                print("Parallel version (shared memory) T:" + str(t) + " --- Time: " + str((sum_time / n)) + " sec")
-            else:
-                print("Parallel version T:" + str(t) + " --- Time: " + str((sum_time / n)) + " sec")
+            print("Parallel version T:" + str(t) + " --- Time: " + str((sum_time / n)) + " sec")
     else:
         label = "SEQ"
         sum_time = 0
@@ -117,15 +108,14 @@ def run_single_test(n, path, kernel, parallel, shared, num_workers, kernel_name)
 
 
 if __name__ == "__main__":
-    kernel = KerPH
-    kernel_name = "Prewitt Horizontal Kernel"
-    n = 5
+    kernel = KerGB7
+    kernel_name = "Gaussian Blur Kernel (7x7)"
+    n = 1
     num_workers = [2, 4, 8, 16]  # 2, 4, 8, 16
 
     # parallel = True
-    # shared_memory = False
     # path = "wiki.png"
-    # run_single_test(n, path, kernel, parallel, shared_memory, num_workers, kernel_name)
+    # run_single_test(n, path, kernel, parallel, num_workers, kernel_name)
 
-    resolutions = ["4K", "2K", "FULL-HD", "HD"]  # "4K", "2K", "FULL-HD", "HD"
+    resolutions = ["SD"]  # "4K", "2K", "FULL-HD", "HD", "SD"
     run_all_test(n, kernel, num_workers, resolutions, kernel_name)
