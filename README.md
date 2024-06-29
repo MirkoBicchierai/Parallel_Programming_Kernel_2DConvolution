@@ -35,22 +35,22 @@ We conducted several tests in this project on various kernels of different sizes
 
 <table>
      <tr>
-        <td><img src="Img/plots/speed-up_Normal_Prewitt Horizontal Kernel (3x3).png"></td>
-        <td><img src="Img/plots/speed-up_Normal_shared_Prewitt Horizontal Kernel (3x3).png"></td>
+        <td><img src="Img/plots/speed-up_Prewitt Horizontal Kernel (3x3).png"></td>
+        <td><img src="Img/plots/speed-up_NV_Prewitt Horizontal Kernel (3x3).png"></td>
      </tr>
 </table>
 
 <table>
      <tr>
-<td><img src="Img/plots/speed-up_Normal_Gaussian Blur Kernel (5x5).png"></td>
-        <td><img src="Img/plots/speed-up_Normal_shared_Gaussian Blur Kernel (5x5).png"></td>
+<td><img src="Img/plots/speed-up_Gaussian Blur Kernel (5x5).png"></td>
+        <td><img src="Img/plots/speed-up_NV_Gaussian Blur Kernel (5x5).png"></td>
      </tr>
 </table>
 
 <table>
      <tr>
-        <td><img src="Img/plots/speed-up_Normal_Gaussian Blur Kernel (7x7).png"></td>
-        <td><img src="Img/plots/speed-up_Normal_shared_Gaussian Blur Kernel (7x7).png"></td>
+        <td><img src="Img/plots/speed-up_Gaussian Blur Kernel (7x7).png"></td>
+        <td><img src="Img/plots/speed-up_NV_Gaussian Blur Kernel (7x7).png"></td>
      </tr>
 </table>
 

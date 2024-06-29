@@ -110,12 +110,12 @@ def run_single_test(n, path, kernel, parallel, num_workers, kernel_name):
 if __name__ == "__main__":
     kernel = KerGB7
     kernel_name = "Gaussian Blur Kernel (7x7)"
-    n = 1
-    num_workers = [2, 4, 8, 16]  # 2, 4, 8, 16
+    n = 5
+    num_workers = [2, 4, 8, 16]
 
     # parallel = True
     # path = "wiki.png"
     # run_single_test(n, path, kernel, parallel, num_workers, kernel_name)
 
-    resolutions = ["SD"]  # "4K", "2K", "FULL-HD", "HD", "SD"
+    resolutions = ["4K", "2K", "FULL-HD", "HD", "SD"]
     run_all_test(n, kernel, num_workers, resolutions, kernel_name)
