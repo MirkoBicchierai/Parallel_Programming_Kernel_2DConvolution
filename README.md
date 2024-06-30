@@ -54,6 +54,10 @@ We conducted several tests in this project on various kernels of different sizes
      </tr>
 </table>
 
+## Vectorization improvements
+<img src="Img/plots/barplot2K.png">
+<img src="Img/plots/barplot4K.png">
+
 ## How To Use
 
 <h3>First Step (Folder setup):</h3>

@@ -1,5 +1,5 @@
 import numpy as np
-from multiprocessing import Pool, shared_memory
+from multiprocessing import Pool
 
 
 def apply_convolution(img, kernel, height, width, pad_y, pad_x):
