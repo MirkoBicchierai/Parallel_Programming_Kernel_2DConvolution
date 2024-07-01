@@ -41,17 +41,17 @@ def run_all_test(n, kernel, num_workers, resolutions, kernel_name):
             sImg = Image.fromarray(new_img)
             sImg.save('Img/output/output_image_' + 'PAR_' + file[:-4] + "_" + kernel_name + '.png')
 
-            for t in num_workers:
-                sum_time = 0
-                for _ in range(n):
-                    start_time = time.time()
-                    new_img = parallel_apply_convolution_normal(img_pre, kernel, t, height, width, pad_y, pad_x)
-                    sum_time += time.time() - start_time
-                tmp_p_NV.append(sum_time / n)
-                print("Parallel version (No vector) T:" + str(t) + " --- Time: " + str((sum_time / n)) + " sec")
+            # for t in num_workers:
+            #     sum_time = 0
+            #     for _ in range(n):
+            #         start_time = time.time()
+            #         new_img = parallel_apply_convolution_normal(img_pre, kernel, t, height, width, pad_y, pad_x)
+            #         sum_time += time.time() - start_time
+            #     tmp_p_NV.append(sum_time / n)
+            #     print("Parallel version (No vector) T:" + str(t) + " --- Time: " + str((sum_time / n)) + " sec")
 
-            sImg = Image.fromarray(new_img)
-            sImg.save('Img/output/output_image_' + 'PAR_NoVector_' + file[:-4] + "_" + kernel_name + '.png')
+            # sImg = Image.fromarray(new_img)
+            # sImg.save('Img/output/output_image_' + 'PAR_NoVector_' + file[:-4] + "_" + kernel_name + '.png')
 
             sum_time = 0
             for _ in range(n):
@@ -107,10 +107,33 @@ def run_single_test(n, path, kernel, parallel, num_workers, kernel_name):
     sImg.save('Img/output/single_output_image_' + label + '_' + name_f + '_' + kernel_name + '.png')
 
 
+def single(kernel, num_workers, path):
+    old_img = np.asarray(Image.open(path))
+
+    height, width = old_img.shape[0], old_img.shape[1]
+    kernel_height, kernel_width = kernel.shape[0], kernel.shape[1]
+    pad_y = kernel_height // 2
+    pad_x = kernel_width // 2
+    img_pre = np.pad(old_img, ((pad_y, pad_y), (pad_x, pad_x), (0, 0)), mode='constant', constant_values=0)
+
+    start_time = time.time()
+    new_img = parallel_apply_convolution_normal(img_pre, kernel, num_workers, height, width, pad_y, pad_x)
+    sImg = Image.fromarray(new_img)
+    sImg.show()
+    p = time.time() - start_time
+    print("Parallel version T:" + str(num_workers) + " --- Time: " + str(p) + " sec")
+
+    start_time = time.time()
+    new_img = apply_convolution(img_pre, kernel, height, width, pad_y, pad_x)
+    s = time.time() - start_time
+    print("Sequential version Time: " + str(s) + " sec")
+    print("SPEED UP:", str(s / p))
+
+
 if __name__ == "__main__":
     kernel = KerGB7
     kernel_name = "Gaussian Blur Kernel (7x7)"
-    n = 5
+    n = 100
     num_workers = [2, 4, 8, 16]
 
     # parallel = True
@@ -119,3 +142,8 @@ if __name__ == "__main__":
 
     resolutions = ["4K", "2K", "FULL-HD", "HD", "SD"]
     run_all_test(n, kernel, num_workers, resolutions, kernel_name)
+
+    # single(kernel, 8, "Img/input/2K/2_2560x1440.png")
+    # single(kernel, 8, "Img/input/FULL-HD/2_1920x1080.png")
+    # single(kernel, 8, "Img/input/HD/2_1280x720.png")
+    # single(kernel, 8, "Img/input/SD/2_720x480.png")
